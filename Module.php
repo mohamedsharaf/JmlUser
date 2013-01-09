@@ -24,9 +24,12 @@ class Module
     public function getAutoloaderConfig()
     {
         return array(
+            'Zend\Loader\ClassMapAutoloader' => array(
+                __DIR__ . '/autoload_classmap.php',
+            ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    'JmlUser' => __DIR__ . '/src/JmlUser',
+                    __NAMESPACE__ => __DIR__ . '/src/JmlUser',
                 ),
             ),
         );

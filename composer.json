@@ -1,0 +1,23 @@
+{
+    "name": "jmleroux/jml-user",
+    "description": "A user systeme using ZfcUser and ZfcRbac",
+    "type": "library",
+    "homepage": "https://github.com/ZF-Commons/ZfcBase",
+    "authors": [
+        {
+            "name": "JM Leroux",
+            "email": "jmleroux.pro@gmail.com",
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+    },
+    "autoload": {
+        "psr-0": {
+            "JmlUser": "src/"
+        },
+        "classmap": [
+            "./"
+        ]
+    }
+}

@@ -1,14 +1,13 @@
 <?php
 namespace JmlUser;
 
-use ZfcRbac\Identity\IdentityInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Identity\StandardIdentity;
 
-class Identity implements IdentityInterface, ServiceLocatorAwareInterface
+use Zend\ServiceManager\ServiceLocatorAwareInterface,
+    Zend\ServiceManager\ServiceLocatorInterface;
+
+class Identity extends StandardIdentity implements ServiceLocatorAwareInterface
 {
-    protected $_roles = array();
-
     /** @var ServiceLocatorInterface */
     protected $_sm;
 
@@ -25,16 +24,9 @@ class Identity implements IdentityInterface, ServiceLocatorAwareInterface
 
     public function getRoles()
     {
-        if (empty($this->_roles)) {
-            $auth = $this->_sm->get('zfcuser_auth_service');
-            if ($auth->hasIdentity()) {
-                $this->_roles = array('admin');
-            }
-            else {
-                $this->_roles = array('guest');
-            }
+        if (empty($this->roles)) {
+            $this->roles = array('guest');
         }
-        return $this->_roles;
+        return $this->roles;
     }
 }
-

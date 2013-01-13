@@ -39,15 +39,24 @@ class Module
     {
         return array(
             'invokables' => array(
-                'jmluser_identity' => '\JmlUser\Identity',
             ),
             'factories' => array(
                 'zfcuser_user_mapper' => function ($sm) {
-                    $mapper = new \JmlUser\Mapper\User();
+                    $mapper = new Mapper\User();
                     $mapper->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
-                    $mapper->setEntityPrototype(new \JmlUser\Entity\User());
+                    $mapper->setEntityPrototype(new Entity\User());
                     $mapper->setHydrator(new \ZfcUser\Mapper\UserHydrator());
                     return $mapper;
+                },
+                'jmluser_identity' =>  function ($sm) {
+                    $auth = $sm->get('zfcuser_auth_service');
+                    if ($auth->hasIdentity()) {
+                        $identity = new Identity('admin');
+                    }
+                    else {
+                        $identity = new Identity('guest');
+                    }
+                    return $identity;
                 },
             ),
         );
